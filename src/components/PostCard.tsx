@@ -1,4 +1,3 @@
-import { memo } from "react";
 import useStore from "../store/useStore";
 
 interface PostCardProps {
@@ -7,6 +6,7 @@ interface PostCardProps {
   content: string;
   image: string;
   liked: boolean;
+  saved: boolean
 }
 
 const PostCard: React.FC<PostCardProps> = ({
@@ -14,9 +14,11 @@ const PostCard: React.FC<PostCardProps> = ({
   author,
   content,
   image,
-  liked
+  liked,
+  saved,
 }) => {
   const toggleLike = useStore((state) => state.toggleLike);
+  const toggleSave = useStore((state) => state.toggleSave);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-md shadow-md p-4 mb-4">
@@ -37,8 +39,14 @@ const PostCard: React.FC<PostCardProps> = ({
       >
         {liked ? "Unlike" : "Like"}
       </button>
+      <button
+        onClick={() => toggleSave(id)}
+        className={`px-4 py-2 rounded ml-4 bg-gray-200 dark:bg-gray-700`}
+      >
+        {saved ? "Bookmarked" : "Bookmark"}
+      </button>
     </div>
   );
 };
 
-export default memo(PostCard);
+export default PostCard;

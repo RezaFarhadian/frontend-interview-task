@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 
 const Header: React.FC = () => {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(
+    /**
+     * Obtain and pass from local storage to state
+     */
+    (localStorage.getItem("darkMode") === "true")
+  );
 
   useEffect(() => {
     if (isDarkMode) {
@@ -13,11 +18,11 @@ const Header: React.FC = () => {
   }, [isDarkMode]);
 
   return (
-    <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
+    <header className="bg-white dark:bg-gray-800 p-4 flex justify-between items-center">
       <h1 className="text-xl font-bold">Social Feed</h1>
       <button
         onClick={() => setIsDarkMode(!isDarkMode)}
-        className="bg-gray-700 px-4 py-2 rounded-md"
+        className="dark:bg-white dark:text-black bg-gray-700 px-4 py-2 rounded-md text-white"
       >
         {isDarkMode ? "Light Mode" : "Dark Mode"}
       </button>
