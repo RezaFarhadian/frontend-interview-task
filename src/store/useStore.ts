@@ -12,13 +12,14 @@ interface Post {
 }
 
 interface StoreState {
+  findById: (id: number) => Post;
   posts: Post[];
   toggleLike: (id: number) => void;
   toggleSave: (id: number) => void;
 }
 
 const useStore = create<StoreState>()(
-  persist((set) => ({
+  persist((set, get) => ({
     posts: [
       {
         id: 1,
@@ -173,6 +174,10 @@ const useStore = create<StoreState>()(
           post.id === id ? { ...post, saved: !post.saved } : post
         )
       })),
+
+    findById: (id: number) => {
+      return get().posts.filter((p) => p.id === id)[0]
+    }
     }), {
       name: "store"
     }

@@ -45,6 +45,14 @@ const PostCard: React.FC<PostCardProps> = ({
       >
         {saved ? "Bookmarked" : "Bookmark"}
       </button>
+      <button
+        onClick={() => toggleSave(id)}
+        className={`px-4 py-2 rounded ml-4 bg-gray-200 dark:bg-gray-700`}
+      >
+        <a href={`/${id}`}>
+          View Single Post
+        </a>
+      </button>
     </div>
   );
 };

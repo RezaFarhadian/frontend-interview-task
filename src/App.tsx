@@ -1,15 +1,17 @@
 import React from "react";
-import Header from "./components/Header";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./pages/Layout"
 import Feed from "./components/Feed";
+import Post from "./pages/Post";
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      <Header />
-      <main>
-        <Feed />
-      </main>
-    </div>
+    <Routes>
+    <Route path="/" element={<Layout />}>
+      <Route index element={<Feed />} />
+      <Route path=":postId" element={<Post />} />
+    </Route>
+    </Routes>
   );
 };
 
