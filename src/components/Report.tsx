@@ -1,3 +1,5 @@
+import useStore from "../store/useStore";
+
 export default function Report({
   open,
   onClose
@@ -6,6 +8,8 @@ export default function Report({
   onClose: () => void,
 }>) {
   if (!open) return;
+
+  const pushNotification = useStore((state) => state.pushNotification);
 
   return (
     <div className="
@@ -59,6 +63,7 @@ export default function Report({
               className="mt-6 bg-red-800 text-white p-2"
               onClick={() => {
                 onClose()
+                pushNotification("Report sent!")
               }}
             >
               &gt; Report it

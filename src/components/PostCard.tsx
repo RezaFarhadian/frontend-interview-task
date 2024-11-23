@@ -25,6 +25,8 @@ const PostCard: React.FC<PostCardProps> = ({
   const [reportModalOpen, setReportModalOpen] = useState<boolean>(false)
   const toggleReportModal = () => setReportModalOpen(!reportModalOpen)
 
+  const pushNotification = useStore((state) => state.pushNotification);
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-md shadow-md p-4 mb-4">
       <Report open={reportModalOpen} onClose={() => setReportModalOpen(false)}/>
@@ -47,7 +49,10 @@ const PostCard: React.FC<PostCardProps> = ({
         {liked ? "Unlike" : "Like"}
       </button>
       <button
-        onClick={() => toggleSave(id)}
+        onClick={() => {
+          pushNotification(saved ? "Post unsaved!" : "Post saved!")
+          toggleSave(id)
+        }}
         className={`px-4 py-2 rounded ml-4 bg-gray-200 dark:bg-gray-700`}
       >
         {saved ? "Bookmarked" : "Bookmark"}

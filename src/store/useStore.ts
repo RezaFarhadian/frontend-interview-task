@@ -11,11 +11,18 @@ interface Post {
   saved?: boolean
 }
 
+interface Notification {
+  msg: string,
+}
+
 interface StoreState {
   findById: (id: number) => Post;
   posts: Post[];
   toggleLike: (id: number) => void;
   toggleSave: (id: number) => void;
+  notifications: Notification[];
+  pushNotification: (msg: string) => void;
+  clearNotifications: () => void;
 }
 
 const useStore = create<StoreState>()(
@@ -177,7 +184,28 @@ const useStore = create<StoreState>()(
 
     findById: (id: number) => {
       return get().posts.filter((p) => p.id === id)[0]
-    }
+    },
+
+    notifications: [],
+    pushNotification: (msg: string) => {
+      set((state) => ({
+        notifications: [...state.notifications, {
+          msg,
+        }]
+      }))
+      setTimeout(() => {
+        set((state) => ({
+          notifications: state.notifications.filter((notification) => {
+            return notification.msg !== msg
+          })
+        }))
+      }, 5000)
+    },
+    clearNotifications: () => {
+      set(() => ({
+        notifications: [],
+      }))
+    },
     }), {
       name: "store"
     }
